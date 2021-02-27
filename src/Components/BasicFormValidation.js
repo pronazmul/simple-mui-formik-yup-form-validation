@@ -7,6 +7,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { useState } from "react";
 import YupValidation from "./YupValidation";
 
 const BasicFormValidation = () => {
@@ -18,8 +19,28 @@ const BasicFormValidation = () => {
     confirmPassword: ""
   };
 
-  const handleSubmit = (value, props) => {
-    alert(JSON.stringify(value));
+  const [imgError, setImgError] = useState();
+  const [img, setImg] = useState(null);
+
+  const manageImage = (event) => {
+    const image = event.target.files[0];
+    const { type, size } = image;
+    const supportedSize = 1048576;
+    const supportedType = ["image/png", "image/gif"];
+    if (size > supportedSize) {
+      setImgError("Image size more than 1 MB");
+    } else if (!supportedType.includes(type)) {
+      setImgError("Invalid Image Format");
+    } else {
+      setImg(image);
+    }
+  };
+
+  const handleSubmit = (values, props) => {
+    const newData = { ...values };
+    newData.image = img;
+
+    alert(JSON.stringify(newData));
     props.resetForm();
   };
 
@@ -104,6 +125,17 @@ const BasicFormValidation = () => {
                         props.errors.confirmPassword &&
                         props.touched.confirmPassword
                       }
+                    />
+
+                    <TextField
+                      type="file"
+                      fullWidth
+                      variant="outlined"
+                      margin="dense"
+                      onChange={manageImage}
+                      error={imgError && imgError}
+                      helperText={imgError && <ErrorMessage />}
+                      required
                     />
 
                     <Button
