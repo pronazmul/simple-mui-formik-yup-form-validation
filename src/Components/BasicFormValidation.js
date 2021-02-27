@@ -1,41 +1,26 @@
 import {
   Box,
   Button,
-  Divider,
   Grid,
   Paper,
   TextField,
   Typography
 } from "@material-ui/core";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as yup from "yup";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import YupValidation from "./YupValidation";
 
 const BasicFormValidation = () => {
-  const ValidationSchema = yup.object().shape({
-    name: yup
-      .string()
-      .min(2, "Too Short !")
-      .max(30, "Too Long !")
-      .required("Required !"),
-
-    email: yup
-      .string()
-      .email("Enter a Vaid Email")
-      .required("Email is Required"),
-    password: yup
-      .string()
-      .min(8, "Password must Contained 8 Character")
-      .max(50, "Too long")
-      .required("Enter Your Password")
-  });
-
   const initialValue = {
     name: "",
     email: "",
-    password: ""
+    phoneNumber: "",
+    password: "",
+    confirmPassword: ""
   };
+
   const handleSubmit = (value, props) => {
-    console.log(value);
+    alert(JSON.stringify(value));
+    props.resetForm();
   };
 
   return (
@@ -47,12 +32,11 @@ const BasicFormValidation = () => {
             <Typography variant="h5">Basic Formik Form Validation</Typography>
             <Formik
               initialValues={initialValue}
-              ValidationSchema={ValidationSchema}
+              validationSchema={YupValidation}
               onSubmit={handleSubmit}
             >
               {(props) => {
                 const { name } = props.values;
-                console.log(props);
                 return (
                   <Form>
                     {/* First Way */}
@@ -64,6 +48,10 @@ const BasicFormValidation = () => {
                       margin="dense"
                       value={name}
                       onChange={props.handleChange}
+                      onBlur={props.handleBlur}
+                      helperText={<ErrorMessage name="name" />}
+                      error={props.errors.name && props.touched.name}
+                      required
                     />
                     {/* Second Way */}
                     <Field
@@ -75,6 +63,20 @@ const BasicFormValidation = () => {
                       variant="outlined"
                       margin="dense"
                       helperText={<ErrorMessage name="email" />}
+                      error={props.errors.email && props.touched.email}
+                    />
+
+                    <Field
+                      as={TextField}
+                      label="Phone Number"
+                      name="phoneNumber"
+                      fullWidth
+                      variant="outlined"
+                      margin="dense"
+                      helperText={<ErrorMessage name="phoneNumber" />}
+                      error={
+                        props.errors.phoneNumber && props.touched.phoneNumber
+                      }
                     />
 
                     <Field
@@ -86,6 +88,22 @@ const BasicFormValidation = () => {
                       variant="outlined"
                       margin="dense"
                       helperText={<ErrorMessage name="password" />}
+                      error={props.errors.password && props.touched.password}
+                    />
+
+                    <Field
+                      as={TextField}
+                      label="Confirm Password"
+                      name="confirmPassword"
+                      type="password"
+                      fullWidth
+                      variant="outlined"
+                      margin="dense"
+                      helperText={<ErrorMessage name="confirmPassword" />}
+                      error={
+                        props.errors.confirmPassword &&
+                        props.touched.confirmPassword
+                      }
                     />
 
                     <Button
