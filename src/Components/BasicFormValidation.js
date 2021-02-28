@@ -20,32 +20,9 @@ const BasicFormValidation = () => {
     image: ""
   };
 
-  // const [imgError, setImgError] = useState();
-  // const [img, setImg] = useState(null);
-
-  // const manageImage = (event) => {
-  //   const image = event.target.files[0];
-  //   const { type, size } = image;
-  //   const supportedSize = 1048576;
-  //   const supportedType = ["image/png", "image/gif"];
-  //   if (size > supportedSize) {
-  //     setImgError("Image size more than 1 MB");
-  //   } else if (!supportedType.includes(type)) {
-  //     setImgError("Invalid Image Format");
-  //   } else {
-  //     setImg(image);
-  //   }
-  // };
-
   const handleSubmit = (values, props) => {
-    // // For Custom File Submit
-    // const newData = { ...values };
-    // newData.image = img;
-    // alert(JSON.stringify(newData));
-
-    // alert(JSON.stringify(values));
-
     console.log(values);
+    alert(JSON.stringify(values));
 
     props.resetForm();
   };
@@ -133,7 +110,6 @@ const BasicFormValidation = () => {
                       }
                     />
 
-                    {/* First Way */}
                     <TextField
                       name="image"
                       type="file"
@@ -144,21 +120,10 @@ const BasicFormValidation = () => {
                         props.setFieldValue("image", event.target.files[0])
                       }
                       onBlur={props.handleBlur}
-                      // helperText={<ErrorMessage name="image" />}
-                      // error={props.errors.name && props.touched.name}
-                      // required
-                    />
-
-                    {/* <TextField
-                      type="file"
-                      fullWidth
-                      variant="outlined"
-                      margin="dense"
-                      onChange={manageImage}
-                      error={imgError && imgError}
-                      helperText={imgError && <ErrorMessage />}
+                      helperText={<ErrorMessage name="image" />}
+                      error={props.errors.image && props.touched.image}
                       required
-                    /> */}
+                    />
 
                     <Button
                       variant="contained"
