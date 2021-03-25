@@ -11,7 +11,6 @@ ReactDOM.render(
   rootElement
 );
 
-// import * as React from "react";
 // import { render } from "react-dom";
 // import Button from "@material-ui/core/Button";
 // import { Formik, Field, Form } from "formik";
