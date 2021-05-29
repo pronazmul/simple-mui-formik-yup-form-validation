@@ -2,7 +2,6 @@ import * as yup from "yup";
 
 const SUPPORTED_FORMATS = ["image/jpeg", "image/jpg", "image/png"];
 const FILE_SIZE = 524288;
-
 const phoneNumberRegEx = /^[0-1]{2}[0-9]{9}/;
 const PasswordRegEx = /^.*((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/;
 
